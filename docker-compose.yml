@@ -1,0 +1,20 @@
+version: '2'
+services:
+  asterisk11-lua:
+    image: antirek/asterisk11-lua:latest
+    network_mode: "host"
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "./store/etc/asterisk/:/etc/asterisk/"
+      - "./store/var/log/asterisk:/var/log/asterisk"
+      - "./store/var/menu:/var/menu/"
+    restart: always
+    command: asterisk && tail -f /var/log/asterisk/messages
+
+  couchdb:
+    image: couchdb:latest
+    network_mode: "host"
+    environment:
+      - "COUCHDB_USER=admin"
+      - "COUCHDB_PASSWORD=password"
+    restart: always
