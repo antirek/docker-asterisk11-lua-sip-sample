@@ -109,9 +109,11 @@ local couchdb_ivr = function (context, extension)
     }
 
     local doc4 = doc:retrieve('_design/custom_ivr/_view/custom_by_sound', query_parameters);
-    app.noop(inspect(doc4));
+    app.noop(inspect(doc4.rows[1].doc.sound));
 
-    app.playback('beep')
+    local sound = doc4.rows[1].doc.sound
+
+    app.playback(sound)
     app.hangup();
 end;
 
